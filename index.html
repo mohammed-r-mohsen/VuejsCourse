@@ -21,44 +21,35 @@
         .text-green{
             color: green;
         }
+
+        @keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.is-loading{color:transparent}
+
+.is-loading:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 66%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border-top: 2px solid #07d;
+  border-right: 2px solid transparent;
+  animation: spinner .6s linear infinite;
+}
         </style>
     </head>
     <body class="grid h-full place-items-center">
 
         <div id="app">
            
-            <section v-show="InProgressAssigmens.length">
-                
-                <h2 class="mb-2 font-bold">In Progress</h2>
-                <ul>
-                
-                    <li v-for = "item in InProgressAssigmens" :key="item.id">
-                    <label >
-                        {{ item.name }}
-                        <input type="checkbox" v-model="item.complete">
-                    </label>
-                  </li>
-                
-                </ul>
-                
-            </section>
             
-            <section v-show="CompleteAssigmens.length" class='mt-8'>
-                
-                <h2 class="mb-2 font-bold">Complete</h2>
-                
-                <ul>
-                
-                    <li v-for = "item in CompleteAssigmens" :key="item.id">
-                    <label>
-                        {{ item.name }}
-                        <input type="checkbox" v-model="item.complete" >
-                    </label>
-                  </li>
-                
-                </ul>
-                
-            </section>
             
             <!--
                 button and the input field 
@@ -72,46 +63,12 @@
                 <button :class="buttoncolor" @click='toggle'>click me </button>
             </p>
             -->
-
         </div>
 
-        <script>
-       let app = {
+        <script type="module">
+        import App from "./js/Components/App.js";
             
-        data() {
-                    return {
-                        greeting : 'hello world' , 
-                        buttoncolor : '' ,
-                        active : true ,
-                        assigments : [
-                            {name : 'laravel task' , complete : false , id : 1} , 
-                            {name : 'vue task' , complete : false , id : 2} , 
-                            {name : 'js task' , complete : false , id : 3} , 
-                        ] 
-                    }
-                },
-        computed :{
-            InProgressAssigmens(){
-                return  this.assigments.filter(a => !a.complete) ; 
-            },
-            CompleteAssigmens(){
-                return  this.assigments.filter(a => a.complete) ;
-            },
-        },
-        mounted() {
-                    setTimeout(()=>{
-                        this.greeting = 'changed' 
-                    } , 3000)
-                },
-        methods: {
-                    toggle(){
-                        this.buttoncolor = (this.active=!this.active)?'text-red':'text-green';
-                    },             
-                },
-            };
-            
-            
-       Vue.createApp(app).mount('#app');
+       Vue.createApp(App).mount('#app');
        
        </script>
 

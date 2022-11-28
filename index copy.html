@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/vue@3"></script>
+        <style>
+        html, body{
+            height: 100%;
+        }
+        body{
+            display: grid;
+            place-items: center;
+        }
+        .text-red{
+            color: red;
+        }
+        .text-green{
+            color: green;
+        }
+        </style>
+    </head>
+    <body class="grid h-full place-items-center">
+
+        <div id="app">
+           
+            <section v-show="InProgressAssigmens.length">
+                
+                <h2 class="mb-2 font-bold">In Progress</h2>
+                <ul>
+                
+                    <li v-for = "item in InProgressAssigmens" :key="item.id">
+                    <label >
+                        {{ item.name }}
+                        <input type="checkbox" v-model="item.complete">
+                    </label>
+                  </li>
+                
+                </ul>
+                
+            </section>
+            
+            <section v-show="CompleteAssigmens.length" class='mt-8'>
+                
+                <h2 class="mb-2 font-bold">Complete</h2>
+                
+                <ul>
+                
+                    <li v-for = "item in CompleteAssigmens" :key="item.id">
+                    <label>
+                        {{ item.name }}
+                        <input type="checkbox" v-model="item.complete" >
+                    </label>
+                  </li>
+                
+                </ul>
+                
+            </section>
+            
+            <!--
+                button and the input field 
+            <p>
+                <input type="text" v-model="greeting">
+            </p>
+            <p>
+                {{ greeting }} ({{ greeting.length }})
+            </p>
+            <p>
+                <button :class="buttoncolor" @click='toggle'>click me </button>
+            </p>
+            -->
+
+        </div>
+
+        <script>
+       let app = {
+            
+        data() {
+                    return {
+                        greeting : 'hello world' , 
+                        buttoncolor : '' ,
+                        active : true ,
+                        assigments : [
+                            {name : 'laravel task' , complete : false , id : 1} , 
+                            {name : 'vue task' , complete : false , id : 2} , 
+                            {name : 'js task' , complete : false , id : 3} , 
+                        ] 
+                    }
+                },
+       
+        computed :{
+            InProgressAssigmens(){
+                return  this.assigments.filter(a => !a.complete) ; 
+            },
+            CompleteAssigmens(){
+                return  this.assigments.filter(a => a.complete) ;
+            },
+        },
+       
+        mounted() {
+                    setTimeout(()=>{
+                        this.greeting = 'changed' 
+                    } , 3000)
+                },
+        
+        methods: {
+                    toggle(){
+                        this.buttoncolor = (this.active=!this.active)?'text-red':'text-green';
+                    },             
+                },
+            };
+            
+            
+       Vue.createApp(app).mount('#app');
+       
+       </script>
+
+    </body>
+</html>
