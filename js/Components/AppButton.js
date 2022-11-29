@@ -2,10 +2,10 @@ export default  {
     template: `
         <button :class="{
             
-            ' border rounded px-5 py-2  disabled:cursor-not-allowed':true,
-            'bg-blue-200 hover:bg-blue-400 ':type=='muted',
-            'bg-red-200 hover:bg-red-400 ':type=='primary',
-            'bg-purple-200 hover:bg-purple-400 ':type=='secandry',
+            ' border rounded px-5 py-2  disabled:cursor-not-allowed mt-2':true,
+            'bg-blue-600 hover:bg-blue-800 ':type=='muted',
+            'bg-red-600 hover:bg-red-800 ':type=='primary',
+            'bg-purple-600 hover:bg-purple-800 ':type=='secandry',
             'is-loading':processing , 
         
             }" :disabled="processing"> 
@@ -14,7 +14,7 @@ export default  {
             ` ,
     props: {
         type: {
-            type: String,
+             type: String,
             default: 'primary'
         }, 
         
