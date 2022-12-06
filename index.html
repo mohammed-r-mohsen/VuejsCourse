@@ -55,6 +55,7 @@
                 button and the input field 
             <p>
                 <input type="text" v-model="greeting">
+                <input type="text" :value="name" @input="$event.target.value">
             </p>
             <p>
                 {{ greeting }} ({{ greeting.length }})

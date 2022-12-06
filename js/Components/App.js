@@ -8,14 +8,18 @@ export default {
         'Assigments': Assigments , 
     },
     template: `
-        <Assigments></Assigments>
-        <app-button type="muted" :processing="false"> Hi There</app-button>
-    `,
+        <div class="grid gap-6">
+            <Assigments></Assigments>
+            
+            <app-button type="muted" :processing="false"> Hi There</app-button>
+        </div>
+        `,
     data() {
         return {
             greeting: 'hello world',
             active: true,
             buttoncolor: '',
+            name: 'mohammed', 
         }
     },
 

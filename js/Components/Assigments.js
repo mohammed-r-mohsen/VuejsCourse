@@ -1,39 +1,78 @@
 import AssigmentList from "./AssigmentList.js";
 import NewAssigment from "./NewAssigment.js";
+import Panel from "./panel.js";
 export default {
     components: {
         'assigment-list': AssigmentList,
         'new-assigment': NewAssigment,
+        'panel': Panel,
     },
     template: `
-            <section class="space-y-6">
-                <assigment-list :assigments="filter.InProgress" title="In Progress"></assigment-list>
+            <section class=" flex gap-8">
+                <assigment-list :assigments="filters.InProgress" title="In Progress">
+                    <new-assigment @add="add"></new-assigment>
+                </assigment-list>
 
-                <assigment-list :assigments="filter.Completed" title="Completed"></assigment-list>
                 
-               <new-assigment @add="add"></new-assigment>
+                
+                <div v-show="showCompleted">
+                
+                    <assigment-list 
+                        :assigments="filters.Completed" 
+                        title="Completed" 
+                        canHide
+                        @toggle='showCompleted = !showCompleted'
+                        >
+                        <new-assigment @add="add"></new-assigment>
+                    </assigment-list>
+                
+                </div>
 
             </section>
+
+                <panel theme="ligth">
+                    <template v-slot:default>
+                        this is my default slot
+                    </template>
+
+                    <template v-slot:heading>
+                        this is my heading slot
+                    </template>
+                </panel>
+                
+                <panel theme="dark">
+                    <template v-slot:default>
+                        this is my default slot
+                    </template>
+
+                    <template v-slot:heading>
+                        this is my heading slot
+                    </template>
+                </panel>
             ` ,
     data() {
         return {
             
-            assigments: [
-                { name: 'laravel task', complete: false, id: 1 },
-                { name: 'vue task', complete: false, id: 2 },
-                { name: 'js task', complete: false, id: 3 },
-            ],
+            assigments: [], 
+            showCompleted : true , 
             
         }
     },
     computed: {
 
-        filter() {
+        filters() {
             return {
                 InProgress: this.assigments.filter(a => !a.complete),
                 Completed: this.assigments.filter(a => a.complete),
             }
         }
+    },
+    created() {
+        fetch('http://localhost:3001/assigments')
+            .then(response => response.json())
+            .then(assigments => {
+                this.assigments = assigments;
+            });
     },
 
     methods: {
@@ -42,9 +81,8 @@ export default {
  
                 name: name,
                 complete: false,
- 
-                id: this.assigments.length + 1
- 
+                id: this.assigments.length + 1 , 
+                tag:'untaged'
             }); 
             
         }

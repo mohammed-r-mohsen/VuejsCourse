@@ -3,7 +3,7 @@ export default {
     
          <form @submit.prevent="add">
                 
-                    <div class="border border-gray-600 text-black">
+                    <div class="border border-gray-600 text-black flex">
                         <input type="text" v-model="NewAssigment" placeholder="New Assigmnt......." class="p-2"/>
                         <button type="submit" class="bg-white border-l p-2">ADD</button>
                     </div>
@@ -13,11 +13,13 @@ export default {
     `,
     data() {
         return {
-            NewAssigment:''
+            NewAssigment:'' , 
         }
     },
     methods: {
         add() {
+            
+            if(this.NewAssigment!=='') 
             this.$emit('add', this.NewAssigment);
             this.NewAssigment = ''; 
         }
